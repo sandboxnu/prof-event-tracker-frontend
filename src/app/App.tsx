@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import ProfilePage from '../profile/Profile';
 import ActivityForm from '../activityForm/ActivityForm';
-import SubmissionsPage from '../Submissions/Submissions';
+import SubmissionsPage from '../submissions/Submissions';
 
 const Home = () => (
   <div>
