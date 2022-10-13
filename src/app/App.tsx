@@ -4,16 +4,15 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from 'react-router-dom';
 import ProfilePage from '../profile/Profile';
 import ActivityForm from '../activityForm/ActivityForm';
 import SubmissionsPage from '../submissions/Submissions';
+import Navbar from '../navbar/Navbar';
 
 const Home = () => (
   <div>
     <h1>Home</h1>
-    <Link to='/dashboard'> Dashboard </Link>
   </div>
 );
 
@@ -21,6 +20,7 @@ const Home = () => (
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/profile' element={<ProfilePage />} />
