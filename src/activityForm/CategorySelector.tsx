@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { ActivityCategory, setCategory } from './form.store';
+import React, { ChangeEventHandler } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ActivityCategory, selectCategory, setCategory, setStep } from './form.store';
 
 const CategorySelector: React.FC = () => {
-    const [category, setCategoryInput] = useState<ActivityCategory | null>(null);
+    const category: ActivityCategory | null = useSelector(selectCategory);
     const dispatch = useDispatch();
 
     
-    const handleChange = (event:any) => {
+    const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
         const newCategory: ActivityCategory = event.target.value as ActivityCategory;
         if (newCategory) {
-            setCategoryInput(newCategory);
+            dispatch(setCategory(newCategory));
         }
     };
 
     const submit = () => {
         if (category) {
-            dispatch(setCategory(category));
+            dispatch(setStep('form'));
         }
     }
 
@@ -24,9 +24,9 @@ const CategorySelector: React.FC = () => {
     <div>
         <h1>Category</h1>
         <ol>
-            <li>one</li>
-            <li>two</li>
-            <li>three</li>
+            <li>Teaching: Educational activities that benefit NU students.</li>
+            <li>Creative Activity, Scholarship and Research/Professional Development.</li>
+            <li>Service: Activities outside of NU community.</li>
         </ol>
         <label>
             Select Category
