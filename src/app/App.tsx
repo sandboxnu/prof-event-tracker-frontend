@@ -7,7 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import ProfilePage from '../profile/Profile';
-import ActivityForm from '../activityForm/ActivityForm';
+import ActivityForm from '../activityForm/Page/ActivityForm';
 import SubmissionsPage from '../submissions/Submissions';
 import Navbar from '../navbar/Navbar';
 import { store } from './app.store';

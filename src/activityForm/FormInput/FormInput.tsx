@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, DateString, resetForm, selectCategory, selectDate, selectDescription, selectWeight, setDate, setDescription, setStep, setWeight } from "./form.store";
+import { ActivityCategory, ActivityWeight, DateString, selectCategory, selectDate, selectDescription, selectWeight, setDate, setDescription, setStep, setWeight } from "../form.store";
+import './FormInput.scss';
 
 const categoryLabels: Record<ActivityCategory, string> = {
     teaching: "Teaching",
@@ -38,7 +39,7 @@ const FormInput: React.FC = () => {
 
     if (category === null) return (<div>Category must be selected</div>);
     return (
-        <div>
+        <div className="input-container">
             <h1>{categoryLabels[category]}</h1>
             <label>Weight Guidelines:</label>
             <label>Weight:</label>
@@ -52,8 +53,10 @@ const FormInput: React.FC = () => {
             <input type='date' value={date || ''} onChange={handleDateChange} />
             <label>Description:</label>
             <input type='text' placeholder="Enter Description" value={description || ''} onChange={handleDescriptionChange}/>
-            <button onClick={() => dispatch(setStep('selection'))}>Back</button>
-            <button disabled={weight === null || date === null || description === ''}>Submit</button> 
+            <div className="button-container">
+                <button onClick={() => dispatch(setStep('selection'))}>Back</button>
+                <button disabled={weight === null || date === null || description === ''}>Submit</button> 
+            </div>
         </div>
     );
 };

@@ -1,9 +1,10 @@
 import React from "react";
+import "./FormInstructions.scss";
 
 const FormInstructions: React.FC = () => {
     return (
-        <div>
-            <h1>Instructions:</h1>
+        <div className="instructions-container">
+            <h2>Instructions:</h2>
             <ul>
                 <li>For each activity, select a category, insert information about each activity, and provide a concise description that provides context.</li>
                 <li>Each activity should have a weight of major, significant, or minor.</li>
