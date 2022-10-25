@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import CategorySelector from '../CategorySelector';
+import CategorySelector from '../CategorySelector/CategorySelector';
 import { FormStep, selectStep } from '../form.store';
 import FormInstructions from '../FormInstructions/FormInstructions';
 import FormInput from '../FormInput/FormInput';
