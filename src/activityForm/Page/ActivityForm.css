@@ -6,8 +6,7 @@
 
 .left-column {
     flex: 60%;
-    padding: 60px;
-    padding-top: 0px;
+    padding: 0 92px 32px;
 }
 
 .right-column {

@@ -32,27 +32,48 @@ const FormInput: React.FC = () => {
         }
     };
 
-    const handleDescriptionChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleDescriptionChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         const newDescription: string = event.target.value;
         dispatch(setDescription(newDescription));
     }
 
     if (category === null) return (<div>Category must be selected</div>);
     return (
-        <div className="input-container">
+        <div className="form-input-container">
             <h1>{categoryLabels[category]}</h1>
-            <label>Weight Guidelines:</label>
-            <label>Weight:</label>
-            <select value={weight || ""} onChange={handleWeightChange}>
-                <option value="">Select Weight</option>
-                <option value="major">Major</option>
-                <option value="significant">Significant</option>
-                <option value="minor">Minor</option>
-            </select>
-            <label>Date:</label>
-            <input type='date' value={date || ''} onChange={handleDateChange} />
-            <label>Description:</label>
-            <input type='text' placeholder="Enter Description" value={description || ''} onChange={handleDescriptionChange}/>
+            
+            <label id="weight-guidelines-label">Weight Guidelines:</label>
+            <div className="guidelines-list">
+                <p>8-10 Major Activity: 2 and above + Significant and Minor Activities: 10 and above</p>
+                <p>7-8	Major Activity: 1-2 + Significant and Minor Activities: 6-10</p>
+                <p>6-7	Major Activity: 0-1 + Significant and Minor Activities: 2-6</p>
+                <p>6 Fulfilling required course load</p>
+            </div>
+            
+            <div className="input-container">
+                <label>Weight:</label>
+                <select value={weight || ""} onChange={handleWeightChange}>
+                    <option value="">Select Weight</option>
+                    <option value="major">Major</option>
+                    <option value="significant">Significant</option>
+                    <option value="minor">Minor</option>
+                </select>
+            </div>
+
+            <div className="input-container">
+                <label>Date:</label>
+                <input type='date' value={date || ''} onChange={handleDateChange} />
+            </div>
+            
+            <div className="input-container">
+                <label>Description:</label>
+                <textarea
+                placeholder="Enter Description" 
+                value={description || ''} 
+                onChange={handleDescriptionChange}
+                rows={3}/>
+            </div>
+            
             <div className="button-container">
                 <button onClick={() => dispatch(setStep('selection'))}>Back</button>
                 <button disabled={weight === null || date === null || description === ''}>Submit</button> 

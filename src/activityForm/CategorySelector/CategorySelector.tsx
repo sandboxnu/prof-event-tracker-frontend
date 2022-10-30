@@ -30,7 +30,6 @@ const CategorySelector: React.FC = () => {
             <li>Service: Activities outside of NU community.</li>
         </ol>
         <label>
-            Select Category
             <div>
                 <select value={category || ""} onChange={handleChange}>
                     <option value="">Select a Category</option>

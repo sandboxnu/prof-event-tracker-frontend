@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CategorySelector from '../CategorySelector/CategorySelector';
 import { FormStep, selectStep } from '../form.store';
@@ -14,6 +14,12 @@ const StepComponent: Record<FormStep, JSX.Element> = {
 
 const ActivityForm: React.FC = () => {
     const step: FormStep = useSelector(selectStep);
+
+    useEffect(() => {
+        window.onbeforeunload = () => {
+            return 'Data will be lost if you leave the page, are you sure?';
+        };
+    }, []);
     
     return (
         <div className='form-container'>
