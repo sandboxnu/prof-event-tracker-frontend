@@ -26,3 +26,13 @@ h1 {
 h2 {
   font-size: 24px !important;
 }
+
+input[type="date"] {
+  background-image: url('/public/calendarIcon.svg');
+  background-repeat: no-repeat;
+  background-position: 98%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+opacity: 0;
+}
