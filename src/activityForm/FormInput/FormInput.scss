@@ -20,7 +20,14 @@
         *:not(:last-child) {
             margin-bottom: 18px;
         }
+
+        .date-input {
+            background-image: url('../../../public/calendarIcon.svg');
+            background-repeat: no-repeat;
+            background-position: 98%;
+        }
     }
+
 
     label {
         font-size: 24px;

@@ -1,6 +1,6 @@
-import React, { ChangeEventHandler } from "react";
+import React, { ChangeEventHandler, FocusEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, DateString, selectCategory, selectDate, selectDescription, selectWeight, setDate, setDescription, setStep, setWeight } from "../form.store";
+import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectWeight, setDate, setDescription, setStep, setWeight } from "../form.store";
 import './FormInput.scss';
 
 const categoryLabels: Record<ActivityCategory, string> = {
@@ -12,7 +12,7 @@ const categoryLabels: Record<ActivityCategory, string> = {
 const FormInput: React.FC = () => {
     const category: ActivityCategory | null = useSelector(selectCategory);
     const weight: ActivityWeight | null = useSelector(selectWeight);
-    const date: DateString | null = useSelector(selectDate);
+    const date: string = useSelector(selectDate);
     const description: string = useSelector(selectDescription);
 
     const dispatch = useDispatch();
@@ -25,16 +25,23 @@ const FormInput: React.FC = () => {
     };
 
     const handleDateChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const newDate: Date = new Date(event.target.value.replace('-', '/'));
-        if (newDate) {
-            const dateStr: DateString = `${newDate.getUTCFullYear()}-${newDate.getUTCMonth() + 1}-${newDate.getUTCDate()}`;
-            dispatch(setDate(dateStr));
-        }
+        const newDate: string = event.target.value;
+        dispatch(setDate(newDate));
     };
 
     const handleDescriptionChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         const newDescription: string = event.target.value;
         dispatch(setDescription(newDescription));
+    };
+
+    const changeToDate: FocusEventHandler<HTMLInputElement> = (event) => {
+        event.target.type="date";
+    }
+
+    const changeToText: FocusEventHandler<HTMLInputElement>  = (event) => {
+        if(!event.target.value) {
+            event.target.type="text"
+        }
     }
 
     if (category === null) return (<div>Category must be selected</div>);
@@ -62,7 +69,14 @@ const FormInput: React.FC = () => {
 
             <div className="input-container">
                 <label>Date:</label>
-                <input type='date' value={date || ''} onChange={handleDateChange} />
+                <input className="date-input"
+                    type='text'
+                    placeholder="Enter Date" 
+                    value={date} 
+                    onChange={handleDateChange} 
+                    onFocus={changeToDate}
+                    onBlur={changeToText}
+                />
             </div>
             
             <div className="input-container">

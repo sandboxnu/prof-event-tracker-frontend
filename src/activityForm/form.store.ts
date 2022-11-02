@@ -5,13 +5,14 @@ import { RootState } from "../app/app.store";
 export type FormStep = 'selection' | 'form' | 'success';
 export type ActivityCategory = 'teaching' | 'creative' | 'service';
 export type ActivityWeight = 'major' | 'significant' | 'minor';
-export type DateString = `${number}-${number}-${number}`;
 
+// TODO: We might want to make this string or null? and do the a null check inside the component? Or we can check for null and validate
+// that it fits the intended format before sending to the backend? Either way we have to check for correct format before sending to backend
 export interface FormState {
     step: FormStep,
     category: ActivityCategory | null,
     weight: ActivityWeight | null,
-    date: DateString | null,
+    date: string,
     description: string
 };
 
@@ -19,7 +20,7 @@ const initialState: FormState = {
     step: 'selection',
     category: null,
     weight: null,
-    date: null,
+    date: '',
     description: ''
 };
 
@@ -36,7 +37,7 @@ export const formSlice = createSlice({
         setWeight: (state, action: PayloadAction<ActivityWeight>) => {
             state.weight = action.payload;
         },
-        setDate: (state, action: PayloadAction<DateString>) => {
+        setDate: (state, action: PayloadAction<string>) => {
             state.date = action.payload;
         },
         setDescription: (state, action: PayloadAction<string>) => {
@@ -46,7 +47,7 @@ export const formSlice = createSlice({
             state.step = 'selection';
             state.category = null;
             state.weight = null;
-            state.date = null;
+            state.date = '';
             state.description = '';
         },
     },
@@ -60,7 +61,7 @@ export const selectCategory: Selector<RootState, ActivityCategory|null> = (state
 
 export const selectWeight: Selector<RootState, ActivityWeight | null> = (state) => state.form.weight;
 
-export const selectDate: Selector<RootState, DateString | null> = (state) => state.form.date;
+export const selectDate: Selector<RootState, string> = (state) => state.form.date;
 
 export const selectDescription: Selector<RootState, string> = (state) => state.form.description;
 
