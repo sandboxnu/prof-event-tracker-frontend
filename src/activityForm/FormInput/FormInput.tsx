@@ -61,7 +61,7 @@ const FormInput: React.FC = () => {
             </div>
 
             <div className="tooltip-container">
-                <img src={personIcon} width={22} height={22}></img>
+                <img src={personIcon} alt="Little person icon" width={22} height={22}></img>
                 <Tooltip tooltipTitle={'Example persona for a score between 7-8'} text={[
                     'Major: Teaching a new course, teaching a large course', 
                     'Significant: Organize workshop with partner institution', 
@@ -72,7 +72,7 @@ const FormInput: React.FC = () => {
             <div className="input-container">
                 <label>Weight:</label>
                 <div className="tooltip-container">
-                    <img src={infoIcon} width={22} height={22}></img>
+                    <img src={infoIcon} alt="Little information icon" width={22} height={22}></img>
                     <Tooltip tooltipTitle="Weight Examples" text={['Random text as a placeholder']}/>
                 </div>
                 <select value={weight || ""} onChange={handleWeightChange}>

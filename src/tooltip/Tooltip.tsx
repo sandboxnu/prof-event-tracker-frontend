@@ -10,7 +10,7 @@ const Tooltip = ({tooltipTitle, text}: TooltipProps) => {
     return (
         <div className="tooltip">{tooltipTitle}
             <span className="tooltip-text">
-                {text.map((item) => {return (<p>{item}</p>)})}
+                {text.map((item) => {return (<p key={item}>{item}</p>)})}
             </span>
         </div>
     );
