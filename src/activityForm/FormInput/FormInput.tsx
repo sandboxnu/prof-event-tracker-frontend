@@ -1,7 +1,10 @@
 import React, { ChangeEventHandler, FocusEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectWeight, setDate, setDescription, setStep, setWeight } from "../form.store";
+import Tooltip from "../../tooltip/Tooltip";
 import './FormInput.scss';
+import personIcon from '../../media/personIcon.svg';
+import infoIcon from '../../media/infoIcon.svg';
 
 const categoryLabels: Record<ActivityCategory, string> = {
     teaching: "Teaching",
@@ -56,9 +59,22 @@ const FormInput: React.FC = () => {
                 <p>6-7	Major Activity: 0-1 + Significant and Minor Activities: 2-6</p>
                 <p>6 Fulfilling required course load</p>
             </div>
+
+            <div className="tooltip-container">
+                <img src={personIcon} width={22} height={22}></img>
+                <Tooltip tooltipTitle={'Example persona for a score between 7-8'} text={[
+                    'Major: Teaching a new course, teaching a large course', 
+                    'Significant: Organize workshop with partner institution', 
+                    'Minor: Write 3 letters of recommendation, A directed/independent study, Give a guest lecture'
+                ]}/>
+            </div>
             
             <div className="input-container">
                 <label>Weight:</label>
+                <div className="tooltip-container">
+                    <img src={infoIcon} width={22} height={22}></img>
+                    <Tooltip tooltipTitle="Weight Examples" text={['Random text as a placeholder']}/>
+                </div>
                 <select value={weight || ""} onChange={handleWeightChange}>
                     <option value="">Select Weight</option>
                     <option value="major">Major</option>

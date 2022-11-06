@@ -17,14 +17,22 @@
         display: flex;
         flex-direction: column;
         margin: 12px 0;
-        *:not(:last-child) {
+        >*:not(:last-child) {
             margin-bottom: 18px;
         }
 
         .date-input {
-            background-image: url('../../../public/calendarIcon.svg');
+            background-image: url('../../media/calendarIcon.svg');
             background-repeat: no-repeat;
             background-position: 98%;
+        }
+    }
+
+    .tooltip-container {
+        display: flex;
+        align-items: center;
+        *:not(:last-child) {
+            margin-right: 8px;
         }
     }
 
