@@ -20,6 +20,8 @@
         border-radius: 18px;
         position: absolute;
         z-index: 1;
+        top: 50%;
+        transform: translateY(-50%);
 
         p {
             margin: 12px;

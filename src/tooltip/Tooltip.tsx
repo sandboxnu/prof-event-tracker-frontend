@@ -6,7 +6,7 @@ interface TooltipProps {
     text: string[];
   }
 
-const Tooltip = ({tooltipTitle, text}: TooltipProps) => {
+const Tooltip: React.FC<TooltipProps> = ({tooltipTitle, text}: TooltipProps) => {
     return (
         <div className="tooltip">{tooltipTitle}
             <span className="tooltip-text">
