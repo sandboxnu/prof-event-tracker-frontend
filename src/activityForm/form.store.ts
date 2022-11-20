@@ -3,8 +3,10 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/app.store";
 
 export type FormStep = 'selection' | 'form' | 'success';
-export type ActivityCategory = 'teaching' | 'creative' | 'service';
-export type ActivityWeight = 'major' | 'significant' | 'minor';
+export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
+export type ActivityWeight = 'MAJOR' | 'SIGNIFICANT' | 'MINOR';
+export type FormStatus = 'in progress' | 'loading' | 'success' | 'error';
+
 
 // TODO: We might want to make this string or null? and do the a null check inside the component? Or we can check for null and validate
 // that it fits the intended format before sending to the backend? Either way we have to check for correct format before sending to backend
@@ -13,7 +15,8 @@ export interface FormState {
     category: ActivityCategory | null,
     weight: ActivityWeight | null,
     date: string,
-    description: string
+    description: string,
+    status: FormStatus,
 };
 
 const initialState: FormState = {
@@ -21,7 +24,8 @@ const initialState: FormState = {
     category: null,
     weight: null,
     date: '',
-    description: ''
+    description: '',
+    status: 'in progress',
 };
 
 export const formSlice = createSlice({
@@ -43,17 +47,21 @@ export const formSlice = createSlice({
         setDescription: (state, action: PayloadAction<string>) => {
             state.description = action.payload;
         },
+        setStatus:(state, action: PayloadAction<FormStatus>) => {
+            state.status = action.payload;
+        },
         resetForm: (state) => {
             state.step = 'selection';
             state.category = null;
             state.weight = null;
             state.date = '';
             state.description = '';
+            state.status = 'in progress';
         },
     },
 });
 
-export const { setStep, setCategory, setWeight, setDate, setDescription, resetForm } = formSlice.actions;
+export const { setStep, setCategory, setWeight, setDate, setDescription, setStatus, resetForm } = formSlice.actions;
 
 export const selectStep: Selector<RootState, FormStep> = (state) => state.form.step;
 
@@ -64,5 +72,7 @@ export const selectWeight: Selector<RootState, ActivityWeight | null> = (state) 
 export const selectDate: Selector<RootState, string> = (state) => state.form.date;
 
 export const selectDescription: Selector<RootState, string> = (state) => state.form.description;
+
+export const selectStatus: Selector<RootState, FormStatus> = (state) => state.form.status;
 
 export default formSlice.reducer;

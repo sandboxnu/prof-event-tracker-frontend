@@ -1,15 +1,18 @@
 import React, { ChangeEventHandler, FocusEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectWeight, setDate, setDescription, setStep, setWeight } from "../form.store";
+import { ActivityCategory, ActivityWeight, FormStatus, selectCategory, selectDate, selectDescription, selectStatus, selectWeight, setDate, setDescription, setStatus, setStep, setWeight } from "../form.store";
 import Tooltip from "../../tooltip/Tooltip";
 import './FormInput.scss';
 import personIcon from '../../media/personIcon.svg';
 import infoIcon from '../../media/infoIcon.svg';
+import { createDateFromString } from "../../utils/date.utils";
+import { CreateActivityDto } from "../Api/activityForm.dto";
+import { createActivity } from "../Api/activityForm.client";
 
 const categoryLabels: Record<ActivityCategory, string> = {
-    teaching: "Teaching",
-    creative: "Creative Activity, Scholarship and Research/Professional Development",
-    service: "Service",
+    TEACHING: "Teaching",
+    RESEARCH: "Creative Activity, Scholarship and Research/Professional Development",
+    SERVICE: "Service",
 };
 
 const FormInput: React.FC = () => {
@@ -17,6 +20,8 @@ const FormInput: React.FC = () => {
     const weight: ActivityWeight | null = useSelector(selectWeight);
     const date: string = useSelector(selectDate);
     const description: string = useSelector(selectDescription);
+    const status: FormStatus = useSelector(selectStatus);
+    console.log(status);
 
     const dispatch = useDispatch();
 
@@ -39,13 +44,34 @@ const FormInput: React.FC = () => {
 
     const changeToDate: FocusEventHandler<HTMLInputElement> = (event) => {
         event.target.type="date";
-    }
+    };
 
     const changeToText: FocusEventHandler<HTMLInputElement>  = (event) => {
         if(!event.target.value) {
             event.target.type="text"
         }
-    }
+    };
+
+    const submitActivity = () => {
+        if (!date || !description || !category || !weight) return;
+        const dateObject = createDateFromString(date);
+        if (!dateObject) return;
+
+        const newActivityDto: CreateActivityDto = {
+            userId : 1,
+            academicYearId : 1,
+            date : dateObject,
+            name : 'Cool Activity',
+            description : description,
+            category : category,
+            significance : weight,
+            isFavorite : true
+        };
+        dispatch(setStatus('loading'));
+        createActivity(newActivityDto).then((res) => {
+            dispatch(setStatus(res? 'success' : 'error'));
+        });
+    };
 
     if (category === null) return (<div>Category must be selected</div>);
     return (
@@ -81,9 +107,9 @@ const FormInput: React.FC = () => {
                 </div>
                 <select value={weight || ""} onChange={handleWeightChange}>
                     <option value="">Select Weight</option>
-                    <option value="major">Major</option>
-                    <option value="significant">Significant</option>
-                    <option value="minor">Minor</option>
+                    <option value="MAJOR">Major</option>
+                    <option value="SIGNIFICANT">Significant</option>
+                    <option value="MINOR">Minor</option>
                 </select>
             </div>
 
@@ -110,7 +136,7 @@ const FormInput: React.FC = () => {
             
             <div className="button-container">
                 <button onClick={() => dispatch(setStep('selection'))}>Back</button>
-                <button disabled={weight === null || date === null || description === ''}>Submit</button> 
+                <button disabled={weight === null || date === null || description === ''} onClick={submitActivity}>Submit</button> 
             </div>
         </div>
     );

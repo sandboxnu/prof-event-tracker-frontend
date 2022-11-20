@@ -33,9 +33,9 @@ const CategorySelector: React.FC = () => {
             <div>
                 <select value={category || ""} onChange={handleChange}>
                     <option value="">Select a Category</option>
-                    <option value="teaching">Teaching</option>
-                    <option value="creative">Creative Activity, Scholarship and Research/Professional Development</option>
-                    <option value="service">Service</option>
+                    <option value="TEACHING">Teaching</option>
+                    <option value="RESEARCH">Creative Activity, Scholarship and Research/Professional Development</option>
+                    <option value="SERVICE">Service</option>
                 </select>
             </div>
         </label>
