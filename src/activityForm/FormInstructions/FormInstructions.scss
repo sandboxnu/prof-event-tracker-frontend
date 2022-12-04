@@ -6,4 +6,12 @@
             margin-bottom: 12px;
         }
     }
+
+    .tooltip-container {
+        display: flex;
+        align-items: center;
+        *:not(:last-child) {
+            margin-right: 8px;
+        }
+    }
 }

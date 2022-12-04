@@ -1,9 +1,8 @@
 import React, { ChangeEventHandler, FocusEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, FormStatus, selectCategory, selectDate, selectDescription, selectStatus, selectWeight, setDate, setDescription, setStatus, setStep, setWeight } from "../form.store";
+import { ActivityCategory, ActivityWeight, FormStatus, selectCategory, selectDate, selectDescription, selectName, selectStatus, selectWeight, setDate, setDescription, setName, setStatus, setStep, setWeight } from "../form.store";
 import Tooltip from "../../tooltip/Tooltip";
 import './FormInput.scss';
-import personIcon from '../../media/personIcon.svg';
 import infoIcon from '../../media/infoIcon.svg';
 import { createDateFromString } from "../../utils/date.utils";
 import { CreateActivityDto } from "../Api/activityForm.dto";
@@ -17,6 +16,7 @@ const categoryLabels: Record<ActivityCategory, string> = {
 
 const FormInput: React.FC = () => {
     const category: ActivityCategory | null = useSelector(selectCategory);
+    const name: string | null = useSelector(selectName);
     const weight: ActivityWeight | null = useSelector(selectWeight);
     const date: string = useSelector(selectDate);
     const description: string = useSelector(selectDescription);
@@ -42,6 +42,11 @@ const FormInput: React.FC = () => {
         dispatch(setDescription(newDescription));
     };
 
+    const handleNameChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const newName: string = event.target.value;
+        dispatch(setName(newName));
+    };
+
     const changeToDate: FocusEventHandler<HTMLInputElement> = (event) => {
         event.target.type="date";
     };
@@ -53,7 +58,7 @@ const FormInput: React.FC = () => {
     };
 
     const submitActivity = () => {
-        if (!date || !description || !category || !weight) return;
+        if (!date || !description || !category || !weight || !name) return;
         const dateObject = createDateFromString(date);
         if (!dateObject) return;
 
@@ -61,7 +66,7 @@ const FormInput: React.FC = () => {
             userId : 1,
             academicYearId : 1,
             date : dateObject,
-            name : 'Cool Activity',
+            name : name,
             description : description,
             category : category,
             significance : weight,
@@ -77,22 +82,11 @@ const FormInput: React.FC = () => {
     return (
         <div className="form-input-container">
             <h1>{categoryLabels[category]}</h1>
-            
-            <label id="weight-guidelines-label">Weight Guidelines:</label>
-            <div className="guidelines-list">
-                <p>8-10 Major Activity: 2 and above + Significant and Minor Activities: 10 and above</p>
-                <p>7-8	Major Activity: 1-2 + Significant and Minor Activities: 6-10</p>
-                <p>6-7	Major Activity: 0-1 + Significant and Minor Activities: 2-6</p>
-                <p>6 Fulfilling required course load</p>
-            </div>
 
-            <div className="tooltip-container">
-                <img src={personIcon} alt="Little person icon" width={22} height={22}/>
-                <Tooltip tooltipTitle={'Example persona for a score between 7-8'} text={[
-                    'Major: Teaching a new course, teaching a large course', 
-                    'Significant: Organize workshop with partner institution', 
-                    'Minor: Write 3 letters of recommendation, A directed/independent study, Give a guest lecture'
-                ]}/>
+            {/* TODO: Connect to Redux Store */}
+            <div className="input-container">
+                <label>Name:</label>
+                <input type={"text"} placeholder="Enter Activity Name" onChange={handleNameChange} value={name || ''}></input>
             </div>
             
             <div className="input-container">

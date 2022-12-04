@@ -12,6 +12,7 @@ export type FormStatus = 'in progress' | 'loading' | 'success' | 'error';
 // that it fits the intended format before sending to the backend? Either way we have to check for correct format before sending to backend
 export interface FormState {
     step: FormStep,
+    activityName: string | null
     category: ActivityCategory | null,
     weight: ActivityWeight | null,
     date: string,
@@ -21,6 +22,7 @@ export interface FormState {
 
 const initialState: FormState = {
     step: 'selection',
+    activityName: null,
     category: null,
     weight: null,
     date: '',
@@ -34,6 +36,9 @@ export const formSlice = createSlice({
     reducers: {
         setStep: (state, action: PayloadAction<FormStep>) => {
             state.step = action.payload;
+        },
+        setName: (state, action: PayloadAction<string>) => {
+            state.activityName = action.payload;
         },
         setCategory: (state, action: PayloadAction<ActivityCategory>) => {
             state.category = action.payload;
@@ -52,6 +57,7 @@ export const formSlice = createSlice({
         },
         resetForm: (state) => {
             state.step = 'selection';
+            state.activityName = null;
             state.category = null;
             state.weight = null;
             state.date = '';
@@ -61,7 +67,9 @@ export const formSlice = createSlice({
     },
 });
 
-export const { setStep, setCategory, setWeight, setDate, setDescription, setStatus, resetForm } = formSlice.actions;
+export const { setName, setStep, setCategory, setWeight, setDate, setDescription, setStatus, resetForm } = formSlice.actions;
+
+export const selectName: Selector<RootState, string|null> = (state) => state.form.activityName;
 
 export const selectStep: Selector<RootState, FormStep> = (state) => state.form.step;
 
