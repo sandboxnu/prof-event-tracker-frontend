@@ -5,7 +5,7 @@ import { RootState } from "../app/app.store";
 export type FormStep = 'selection' | 'form' | 'success';
 export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
 export type ActivityWeight = 'MAJOR' | 'SIGNIFICANT' | 'MINOR';
-export type FormStatus = 'in progress' | 'loading' | 'success' | 'error';
+export type FormStatus = 'in progress' | 'loading' | 'success' | 'error'; //TODO: Merge FormStep and FormStatus
 
 
 // TODO: We might want to make this string or null? and do the a null check inside the component? Or we can check for null and validate
