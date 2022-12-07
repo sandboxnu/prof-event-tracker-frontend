@@ -2,10 +2,9 @@ import { createSlice, Selector } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/app.store";
 
-export type FormStep = 'selection' | 'form' | 'success';
+export type FormStep = 'selection' | 'form' | 'success' | 'loading' | 'error'
 export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
 export type ActivityWeight = 'MAJOR' | 'SIGNIFICANT' | 'MINOR';
-export type FormStatus = 'in progress' | 'loading' | 'success' | 'error'; //TODO: Merge FormStep and FormStatus
 
 
 // TODO: We might want to make this string or null? and do the a null check inside the component? Or we can check for null and validate
@@ -17,7 +16,6 @@ export interface FormState {
     weight: ActivityWeight | null,
     date: string,
     description: string,
-    status: FormStatus,
 };
 
 const initialState: FormState = {
@@ -27,7 +25,6 @@ const initialState: FormState = {
     weight: null,
     date: '',
     description: '',
-    status: 'in progress',
 };
 
 export const formSlice = createSlice({
@@ -52,9 +49,6 @@ export const formSlice = createSlice({
         setDescription: (state, action: PayloadAction<string>) => {
             state.description = action.payload;
         },
-        setStatus:(state, action: PayloadAction<FormStatus>) => {
-            state.status = action.payload;
-        },
         resetForm: (state) => {
             state.step = 'selection';
             state.activityName = null;
@@ -62,12 +56,11 @@ export const formSlice = createSlice({
             state.weight = null;
             state.date = '';
             state.description = '';
-            state.status = 'in progress';
         },
     },
 });
 
-export const { setName, setStep, setCategory, setWeight, setDate, setDescription, setStatus, resetForm } = formSlice.actions;
+export const { setName, setStep, setCategory, setWeight, setDate, setDescription, resetForm } = formSlice.actions;
 
 export const selectName: Selector<RootState, string|null> = (state) => state.form.activityName;
 
@@ -80,7 +73,5 @@ export const selectWeight: Selector<RootState, ActivityWeight | null> = (state) 
 export const selectDate: Selector<RootState, string> = (state) => state.form.date;
 
 export const selectDescription: Selector<RootState, string> = (state) => state.form.description;
-
-export const selectStatus: Selector<RootState, FormStatus> = (state) => state.form.status;
 
 export default formSlice.reducer;

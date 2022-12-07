@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, FocusEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, FormStatus, selectCategory, selectDate, selectDescription, selectName, selectStatus, selectWeight, setDate, setDescription, setName, setStatus, setStep, setWeight } from "../form.store";
+import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectName, selectWeight, setDate, setDescription, setName, setStep, setWeight } from "../form.store";
 import Tooltip from "../../tooltip/Tooltip";
 import './FormInput.scss';
 import infoIcon from '../../media/infoIcon.svg';
@@ -20,8 +20,6 @@ const FormInput: React.FC = () => {
     const weight: ActivityWeight | null = useSelector(selectWeight);
     const date: string = useSelector(selectDate);
     const description: string = useSelector(selectDescription);
-    const status: FormStatus = useSelector(selectStatus);
-    console.log(status);
 
     const dispatch = useDispatch();
 
@@ -72,9 +70,9 @@ const FormInput: React.FC = () => {
             significance : weight,
             isFavorite : true
         };
-        dispatch(setStatus('loading'));
+        dispatch(setStep('loading'));
         createActivity(newActivityDto).then((res) => {
-            dispatch(setStatus(res? 'success' : 'error'));
+            dispatch(setStep(res? 'success' : 'success')); //TODO: change this back later
         });
     };
 
