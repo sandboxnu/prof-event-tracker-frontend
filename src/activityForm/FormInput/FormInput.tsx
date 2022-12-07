@@ -128,7 +128,7 @@ const FormInput: React.FC = () => {
             
             <div className="button-container">
                 <button onClick={() => dispatch(setStep('selection'))}>Back</button>
-                <button disabled={weight === null || date === null || description === ''} onClick={submitActivity}>Submit</button> 
+                <button className="red-button" disabled={weight === null || date === null || description === ''} onClick={submitActivity}>Submit</button> 
             </div>
         </div>
     );

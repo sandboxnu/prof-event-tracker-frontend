@@ -39,7 +39,7 @@ const CategorySelector: React.FC = () => {
                 </select>
             </div>
         </label>
-        <button onClick={submit} disabled={category === null}>Next</button>
+        <button className="red-button" onClick={submit} disabled={category === null}>Next</button>
     </div>
     );
 };

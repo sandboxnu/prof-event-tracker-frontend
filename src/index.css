@@ -39,4 +39,15 @@ button {
   background-color: white;
   width: 10%;
   height: 30%;
+  cursor: pointer;
+}
+
+.red-button {
+  border-color: red;
+  background-color: red;
+  color: white;
+}
+
+.red-button:disabled {
+  background-color: lightcoral;
 }

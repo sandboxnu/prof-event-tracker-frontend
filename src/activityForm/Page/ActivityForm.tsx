@@ -2,21 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CategorySelector from '../CategorySelector/CategorySelector';
 import { FormStep, selectStep } from '../form.store';
-import FormInstructions from '../FormInstructions/FormInstructions';
 import FormInput from '../FormInput/FormInput';
-import './ActivityForm.css';
 import ResultPage from '../ResultPage/ResultPage';
-
-const FormContainer: React.FC<{children: JSX.Element}> = ({children}) => (
-    <div className='form-container'>
-        <div className='left-column'>
-            {children}
-        </div>
-        <div className='right-column'>
-            <FormInstructions/>
-        </div>
-    </div>
-)
+import FormContainer from '../FormContainer/FormContainer';
+import './ActivityForm.css';
 
 const StepComponent: Record<FormStep, JSX.Element> = {
     'selection': <FormContainer><CategorySelector/></FormContainer>, // TODO: Look into children
@@ -25,8 +14,6 @@ const StepComponent: Record<FormStep, JSX.Element> = {
     'loading': <div></div>,
     'error': <ResultPage success={false}/>
 }
-
-
 
 const ActivityForm: React.FC = () => {
     const step: FormStep = useSelector(selectStep);
@@ -37,7 +24,7 @@ const ActivityForm: React.FC = () => {
         };
     }, []);
     
-    return StepComponent[step]
+    return StepComponent[step];
 };
 
 export default ActivityForm;
