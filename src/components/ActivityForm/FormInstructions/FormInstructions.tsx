@@ -1,7 +1,7 @@
 import React from "react";
 import "./FormInstructions.scss";
-import personIcon from '../../media/personIcon.svg';
-import Tooltip from "../../tooltip/Tooltip";
+import personIcon from '../../../media/personIcon.svg';
+import Tooltip from "../../../shared/components/Tooltip/Tooltip";
 
 interface FormInstructionsProps {
     showWeightGuidelines?: boolean; // whether to include weight guidelines

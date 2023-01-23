@@ -1,13 +1,13 @@
 import React, { ChangeEventHandler, FocusEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectName, selectSemester, selectWeight, selectYear, setDate, setDescription, setName, setSemester, setStep, setWeight, setYear } from "../form.store";
-import { createDateFromString } from "../../utils/date.utils";
-import { CreateActivityDto, Semester } from "../Api/activityForm.dto";
-import { createActivity } from "../Api/activityForm.client";
-import Tooltip from "../../tooltip/Tooltip";
-import infoIcon from '../../media/infoIcon.svg';
-import successCheckmark from '../../media/successCheckmark.svg';
-import failureWarning from '../../media/failureWarning.svg';
+import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectName, selectSemester, selectWeight, selectYear, setDate, setDescription, setName, setSemester, setStep, setWeight, setYear } from "../../../store/form.store";
+import { createDateFromString } from "../../../shared/utils/date.utils";
+import { CreateActivityDto, Semester } from "../../../models/activityForm.dto";
+import { createActivity } from "../../../api/activityForm.client";
+import Tooltip from "../../../shared/components/Tooltip/Tooltip";
+import infoIcon from '../../../media/infoIcon.svg';
+import successCheckmark from '../../../media/successCheckmark.svg';
+import failureWarning from '../../../media/failureWarning.svg';
 import './FormInput.scss';
 
 const categoryLabels: Record<ActivityCategory, string> = {
@@ -145,7 +145,7 @@ const FormInput: React.FC = () => {
                     <select value={semester || ""} onChange={handleSemesterChange}>
                         <option value="">Select Semester</option>
                         {["Fall", "Spring", "Summer 1", "Summer 2"].map(sem => (
-                            <option value={sem}>{sem}</option>
+                            <option value={sem} key={sem}>{sem}</option>
                         ))}
                     </select>
                 </div>
