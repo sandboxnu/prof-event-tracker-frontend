@@ -12,20 +12,51 @@
         justify-content: space-between;
         align-items: center;
         cursor: pointer;
+        margin: 36px 0px;
     }
 
     .input-container {
         display: flex;
         flex-direction: column;
-        margin: 12px 0;
+        margin: 8px 0;
         >*:not(:last-child) {
-            margin-bottom: 18px;
+            margin-bottom: 12px;
+        }
+
+        > div {
+            display: flex;
+            align-items: center;
         }
 
         .date-input {
             background-image: url('../../media/calendarIcon.svg');
             background-repeat: no-repeat;
             background-position: 98%;
+        }
+
+    }
+
+    .input-status {
+        display: flex;
+        align-items: center;
+        margin-left: 12px;
+        padding: 14px 0px;
+
+        p {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        *:not(:last-child) {
+            margin-right: 8px;
+        }
+    }
+
+    .year-semester-container {
+        display: flex;
+
+        > *:not(:last-child) {
+            margin-right: 24px;
         }
     }
 
@@ -48,6 +79,7 @@
 
     input, select {
         width: 50%;
+        min-width: 200px;
         box-sizing: border-box;
 
     }

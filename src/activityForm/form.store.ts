@@ -1,6 +1,7 @@
 import { createSlice, Selector } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/app.store";
+import { Semester } from "./Api/activityForm.dto";
 
 export type FormStep = 'selection' | 'form' | 'success' | 'loading' | 'error'
 export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
@@ -14,6 +15,8 @@ export interface FormState {
     activityName: string | null
     category: ActivityCategory | null,
     weight: ActivityWeight | null,
+    semester: Semester | null,
+    year: number | null,
     date: string,
     description: string,
 };
@@ -23,6 +26,8 @@ const initialState: FormState = {
     activityName: null,
     category: null,
     weight: null,
+    semester: null,
+    year: null,
     date: '',
     description: '',
 };
@@ -43,6 +48,12 @@ export const formSlice = createSlice({
         setWeight: (state, action: PayloadAction<ActivityWeight>) => {
             state.weight = action.payload;
         },
+        setSemester: (state, action: PayloadAction<Semester>) => {
+            state.semester = action.payload;
+        },
+        setYear: (state, action: PayloadAction<number | null>) => {
+            state.year = action.payload;
+        },
         setDate: (state, action: PayloadAction<string>) => {
             state.date = action.payload;
         },
@@ -54,13 +65,15 @@ export const formSlice = createSlice({
             state.activityName = null;
             state.category = null;
             state.weight = null;
+            state.semester = null;
+            state.year = null;
             state.date = '';
             state.description = '';
         },
     },
 });
 
-export const { setName, setStep, setCategory, setWeight, setDate, setDescription, resetForm } = formSlice.actions;
+export const { setName, setStep, setCategory, setWeight, setSemester, setYear, setDate, setDescription, resetForm } = formSlice.actions;
 
 export const selectName: Selector<RootState, string|null> = (state) => state.form.activityName;
 
@@ -69,6 +82,10 @@ export const selectStep: Selector<RootState, FormStep> = (state) => state.form.s
 export const selectCategory: Selector<RootState, ActivityCategory|null> = (state) => state.form.category;
 
 export const selectWeight: Selector<RootState, ActivityWeight | null> = (state) => state.form.weight;
+
+export const selectSemester: Selector<RootState, Semester | null> = (state) => state.form.semester;
+
+export const selectYear: Selector<RootState, number | null> = (state) => state.form.year;
 
 export const selectDate: Selector<RootState, string> = (state) => state.form.date;
 

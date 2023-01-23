@@ -19,7 +19,7 @@ const FormContainer: React.FC<{children: JSX.Element}> = ({children}) => {
                 {children}
             </div>
             <div className='right-column'>
-                <FormInstructions/>
+                <FormInstructions showWeightGuidelines={step === "form"} />
             </div>
         </div>
     );

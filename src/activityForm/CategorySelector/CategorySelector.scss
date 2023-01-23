@@ -18,4 +18,13 @@
         @include input-box;
         width: 50%;
     }
+
+    button.bottom-right {
+        float: right;
+        margin-top: 72px;
+    }
+
+    label div {
+        margin-top: 48px;
+    }
 }

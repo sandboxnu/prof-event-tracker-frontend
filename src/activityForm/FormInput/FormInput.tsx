@@ -1,12 +1,14 @@
-import React, { ChangeEventHandler, FocusEventHandler } from "react";
+import React, { ChangeEventHandler, FocusEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectName, selectWeight, setDate, setDescription, setName, setStep, setWeight } from "../form.store";
-import Tooltip from "../../tooltip/Tooltip";
-import './FormInput.scss';
-import infoIcon from '../../media/infoIcon.svg';
+import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectName, selectSemester, selectWeight, selectYear, setDate, setDescription, setName, setSemester, setStep, setWeight, setYear } from "../form.store";
 import { createDateFromString } from "../../utils/date.utils";
-import { CreateActivityDto } from "../Api/activityForm.dto";
+import { CreateActivityDto, Semester } from "../Api/activityForm.dto";
 import { createActivity } from "../Api/activityForm.client";
+import Tooltip from "../../tooltip/Tooltip";
+import infoIcon from '../../media/infoIcon.svg';
+import successCheckmark from '../../media/successCheckmark.svg';
+import failureWarning from '../../media/failureWarning.svg';
+import './FormInput.scss';
 
 const categoryLabels: Record<ActivityCategory, string> = {
     TEACHING: "Teaching",
@@ -18,8 +20,11 @@ const FormInput: React.FC = () => {
     const category: ActivityCategory | null = useSelector(selectCategory);
     const name: string | null = useSelector(selectName);
     const weight: ActivityWeight | null = useSelector(selectWeight);
+    const semester: Semester | null = useSelector(selectSemester);
+    const year: number | null = useSelector(selectYear);
     const date: string = useSelector(selectDate);
     const description: string = useSelector(selectDescription);
+    const [ specifyDate, setSpecifyDate ] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -44,6 +49,25 @@ const FormInput: React.FC = () => {
         const newName: string = event.target.value;
         dispatch(setName(newName));
     };
+    
+    const handleSemesterChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+        const newSemester: Semester = event.target.value as Semester;
+        if (newSemester) {
+            dispatch(setSemester(newSemester));
+        }
+    };
+    
+    const handleYearChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        // delete entire input => reset year
+        if (event.target.value === '') {
+            dispatch(setYear(null));
+        } else {
+            const newYear: number = parseInt(event.target.value);
+            if (!isNaN(newYear)) {
+                dispatch(setYear(newYear));
+            }
+        }
+    };
 
     const changeToDate: FocusEventHandler<HTMLInputElement> = (event) => {
         event.target.type="date";
@@ -56,14 +80,16 @@ const FormInput: React.FC = () => {
     };
 
     const submitActivity = () => {
-        if (!date || !description || !category || !weight || !name) return;
+        if (!description || !category || !weight || !name || !semester || !year || (specifyDate && !date)) return;
         const dateObject = createDateFromString(date);
-        if (!dateObject) return;
+        if (specifyDate && !dateObject) return;
 
         const newActivityDto: CreateActivityDto = {
             userId : 1,
             academicYearId : 1,
-            date : dateObject,
+            semester : semester,
+            year : year,
+            date : dateObject || undefined,
             name : name,
             description : description,
             category : category,
@@ -72,7 +98,7 @@ const FormInput: React.FC = () => {
         };
         dispatch(setStep('loading'));
         createActivity(newActivityDto).then((res) => {
-            dispatch(setStep(res? 'success' : 'success')); //TODO: change this back later
+            dispatch(setStep(res? 'success' : 'error'));
         });
     };
 
@@ -80,13 +106,16 @@ const FormInput: React.FC = () => {
     return (
         <div className="form-input-container">
             <h1>{categoryLabels[category]}</h1>
-
-            {/* TODO: Connect to Redux Store */}
             <div className="input-container">
                 <label>Name:</label>
-                <input type={"text"} placeholder="Enter Activity Name" onChange={handleNameChange} value={name || ''}></input>
+                <div className="input-wrapper">
+                    <input type={"text"} placeholder="Enter Activity Name" onChange={handleNameChange} value={name || ''}></input>
+                    <div className="input-status">
+                        <img src={name ? successCheckmark : failureWarning} alt="Icon" width={16} height={16}/>
+                        { !name && <p className="text-red inline">Enter an activity name.</p> }
+                    </div>
+                </div>
             </div>
-            
             <div className="input-container">
                 <label>Weight:</label>
                 <div className="tooltip-container">
@@ -97,38 +126,71 @@ const FormInput: React.FC = () => {
                         'Minor: Directed study, guest critic, guest lecture, letter of recommendation, mentoring'
                     ]}/>
                 </div>
-                <select value={weight || ""} onChange={handleWeightChange}>
-                    <option value="">Select Weight</option>
-                    <option value="MAJOR">Major</option>
-                    <option value="SIGNIFICANT">Significant</option>
-                    <option value="MINOR">Minor</option>
-                </select>
+                <div className="input-wrapper">
+                    <select value={weight || ""} onChange={handleWeightChange}>
+                        <option value="">Select Weight</option>
+                        <option value="MAJOR">Major</option>
+                        <option value="SIGNIFICANT">Significant</option>
+                        <option value="MINOR">Minor</option>
+                    </select>
+                    <div className="input-status">
+                        <img src={weight ? successCheckmark : failureWarning} alt="Icon" width={16} height={16}/>
+                        { !weight && <p className="text-red inline">Select a weight.</p> }
+                    </div>
+                </div>
             </div>
+            <div className="year-semester-container">
+                <div className="input-container">
+                    <label>Semester:</label>
+                    <select value={semester || ""} onChange={handleSemesterChange}>
+                        <option value="">Select Semester</option>
+                        {["Fall", "Spring", "Summer 1", "Summer 2"].map(sem => (
+                            <option value={sem}>{sem}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="input-container">
+                    <label>Year:</label>
+                    <input type={"text"} placeholder="Enter Year" onChange={handleYearChange} value={year || ''}></input>
+                </div>
+                <div className="input-status mt-auto">
+                    <img src={(semester && year) ? successCheckmark : failureWarning} alt="Icon" width={16} height={16}/>
+                    { (!semester || !year) && <p className="text-red inline">Enter a semester and year.</p> }
+                </div>
+            </div>
+            {
+                specifyDate &&
+                <div className="input-container">
+                    <label>Date:</label>
+                    <input className="date-input"
+                        type='text'
+                        placeholder="Enter Date" 
+                        value={date} 
+                        onChange={handleDateChange} 
+                        onFocus={changeToDate}
+                        onBlur={changeToText}
+                    />
+                </div>
 
+            }
             <div className="input-container">
-                <label>Date:</label>
-                <input className="date-input"
-                    type='text'
-                    placeholder="Enter Date" 
-                    value={date} 
-                    onChange={handleDateChange} 
-                    onFocus={changeToDate}
-                    onBlur={changeToText}
-                />
-            </div>
-            
-            <div className="input-container">
-                <label>Description:</label>
+                <div className="input-wrapper">
+                    <label>Description:</label>
+                    <div className="input-status ml-auto">
+                        <img src={description ? successCheckmark : failureWarning} alt="Icon" width={16} height={16}/>
+                        { !description && <p className="text-red inline">Enter a description.</p> }
+                    </div>
+                </div>
                 <textarea
-                placeholder="Enter Description" 
-                value={description || ''} 
-                onChange={handleDescriptionChange}
-                rows={3}/>
+                    placeholder="Enter Description" 
+                    value={description || ''} 
+                    onChange={handleDescriptionChange}
+                    rows={3} />
             </div>
             
             <div className="button-container">
                 <button onClick={() => dispatch(setStep('selection'))}>Back</button>
-                <button className="red-button" disabled={weight === null || date === null || description === ''} onClick={submitActivity}>Submit</button> 
+                <button className="button-red" disabled={weight === null || date === null || description === ''} onClick={submitActivity}>Submit</button> 
             </div>
         </div>
     );
