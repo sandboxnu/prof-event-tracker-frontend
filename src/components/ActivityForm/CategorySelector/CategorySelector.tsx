@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ActivityCategory, selectCategory, setCategory, setStep } from '../form.store';
+import { ActivityCategory, selectCategory, setCategory, setStep } from '../../../store/form.store';
 import './CategorySelector.scss'
 
 const CategorySelector: React.FC = () => {

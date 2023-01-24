@@ -1,4 +1,4 @@
-import { ActivityCategory, ActivityWeight } from "../form.store";
+import { ActivityCategory, ActivityWeight } from "../store/form.store";
 
 export type Semester = 'Fall' | 'Spring' | 'Summer 1' | 'Summer 2';
 

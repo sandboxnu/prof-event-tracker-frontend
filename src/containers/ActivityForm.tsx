@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import CategorySelector from '../CategorySelector/CategorySelector';
-import { FormStep, selectStep } from '../form.store';
-import FormInput from '../FormInput/FormInput';
-import ResultPage from '../ResultPage/ResultPage';
-import FormContainer from '../FormContainer/FormContainer';
+import CategorySelector from '../components/ActivityForm/CategorySelector/CategorySelector';
+import { FormStep, selectStep } from '../store/form.store';
+import FormInput from '../components/ActivityForm/FormInput/FormInput';
+import ResultPage from '../components/ActivityForm/ResultPage/ResultPage';
+import FormContainer from '../components/ActivityForm/FormContainer/FormContainer';
 import './ActivityForm.css';
 
 const StepComponent: Record<FormStep, JSX.Element> = {

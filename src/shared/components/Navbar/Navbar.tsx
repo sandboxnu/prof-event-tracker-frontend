@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { resetForm } from '../activityForm/form.store';
-import neuLogo from '../media/neuLogo.svg';
-import profileIcon from '../media/profileIcon.svg';
+import { resetForm } from '../../../store/form.store';
+import neuLogo from '../../../media/neuLogo.svg';
+import profileIcon from '../../../media/profileIcon.svg';
 import './Navbar.scss';
 
 const Navbar: React.FC = () => {

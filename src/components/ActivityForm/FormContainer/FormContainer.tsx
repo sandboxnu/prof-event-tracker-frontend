@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FormStep, selectStep } from '../form.store';
+import { FormStep, selectStep } from '../../../store/form.store';
 import FormInstructions from '../FormInstructions/FormInstructions';
 import './FormContainer.scss';
 

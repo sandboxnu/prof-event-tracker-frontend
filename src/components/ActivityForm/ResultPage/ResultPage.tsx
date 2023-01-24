@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setStep } from '../form.store';
-import successCheckmark from '../../media/successCheckmark.svg';
-import failureWarning from '../../media/failureWarning.svg';
+import { setStep } from '../../../store/form.store';
+import successCheckmark from '../../../media/successCheckmark.svg';
+import failureWarning from '../../../media/failureWarning.svg';
 import './ResultPage.scss';
 
 const ResultPage: React.FC<{success: boolean}> = ({success}) => {

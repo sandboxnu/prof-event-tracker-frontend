@@ -1,4 +1,4 @@
-import { CreateActivityDto } from "./activityForm.dto";
+import { CreateActivityDto } from "../models/activityForm.dto";
 
 const apiRoot = 'http://localhost:3001/activities/'
 export const createActivity = async (body: CreateActivityDto): Promise<boolean>  => {

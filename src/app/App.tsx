@@ -1,15 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Dashboard from '../dashboard/Dashboard';
+import Dashboard from '../containers/Dashboard';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
-import ProfilePage from '../profile/Profile';
-import ActivityForm from '../activityForm/Page/ActivityForm';
-import SubmissionsPage from '../submissions/Submissions';
-import Navbar from '../navbar/Navbar';
+import ProfilePage from '../containers/Profile';
+import ActivityForm from '../containers/ActivityForm';
+import SubmissionsPage from '../containers/Submissions';
+import Navbar from '../shared/components/Navbar/Navbar';
 import { store } from './app.store';
 
 const Home = () => (
