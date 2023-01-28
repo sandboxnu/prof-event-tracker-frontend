@@ -2,8 +2,8 @@ import React, { ChangeEventHandler, FocusEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActivityCategory, ActivityWeight, selectCategory, selectDate, selectDescription, selectName, selectSemester, selectWeight, selectYear, setDate, setDescription, setName, setSemester, setStep, setWeight, setYear } from "../../../store/form.store";
 import { createDateFromString } from "../../../shared/utils/date.utils";
-import { CreateActivityDto, Semester } from "../../../models/activityForm.dto";
-import { createActivity } from "../../../api/activityForm.client";
+import { CreateActivityDto, Semester } from "../../../models/activity.dto";
+import { createActivity, ResponseStatus } from "../../../api/activities.client";
 import Tooltip from "../../../shared/components/Tooltip/Tooltip";
 import infoIcon from '../../../media/infoIcon.svg';
 import successCheckmark from '../../../media/successCheckmark.svg';
@@ -98,7 +98,7 @@ const FormInput: React.FC = () => {
         };
         dispatch(setStep('loading'));
         createActivity(newActivityDto).then((res) => {
-            dispatch(setStep(res? 'success' : 'error'));
+            dispatch(setStep(res === ResponseStatus.Success ? 'success' : 'error'));
         });
     };
 

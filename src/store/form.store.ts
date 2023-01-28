@@ -1,7 +1,7 @@
 import { createSlice, Selector } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/app.store";
-import { Semester } from "../models/activityForm.dto";
+import { Semester } from "../models/activity.dto";
 
 export type FormStep = 'selection' | 'form' | 'success' | 'loading' | 'error'
 export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
