@@ -1,7 +1,7 @@
-import { ActivityCategory, ActivityFields } from "../../store/Submission.store";
+import { ActivityCategory, ActivityDto } from "../../models/activity.dto";
 
-export const seperateActivitiesByCategory = (activities:ActivityFields[]): Record<ActivityCategory, ActivityFields[]> => {
-    let activitiesByCategory: Record<ActivityCategory, ActivityFields[]> = {"TEACHING": [], "RESEARCH": [], "SERVICE": []}
+export const seperateActivitiesByCategory = (activities:ActivityDto[]): Record<ActivityCategory, ActivityDto[]> => {
+    let activitiesByCategory: Record<ActivityCategory, ActivityDto[]> = {"TEACHING": [], "RESEARCH": [], "SERVICE": []}
     for (let activity of activities) { 
         activitiesByCategory[activity.category].push(activity);
     }

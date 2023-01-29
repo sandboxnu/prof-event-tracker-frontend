@@ -1,27 +1,9 @@
 import { createSlice, Selector, PayloadAction } from "@reduxjs/toolkit"
 import {RootState} from "../app/app.store";
-import { Semester } from "../models/activity.dto";
-
-export type ActivityCategory = "TEACHING" | "RESEARCH" | "SERVICE";
-export type ActivityWeight = "MAJOR" | "SIGNIFICANCE" | "MINOR";
-
-export type ActivityFields = { 
-    userId : string; 
-    academicYearId : number; 
-    year: number;
-    semester: Semester;
-    name : string; 
-    description : string; 
-    category : ActivityCategory; 
-    significance : ActivityWeight; 
-    isFavorite : boolean;
-}
-
+import { ActivityDto } from "../models/activity.dto";
 
 export interface SubmissionState { 
-    activities : ActivityFields[];
-
-
+    activities : ActivityDto[];
 }
 
 const initialState: SubmissionState = { 
@@ -32,7 +14,7 @@ export const submissionSlice = createSlice({
     name: 'Submission',
     initialState, 
     reducers: { 
-        saveActivities: (state, action: PayloadAction<ActivityFields[]>) => { 
+        saveActivities: (state, action: PayloadAction<ActivityDto[]>) => { 
             state.activities = action.payload;
         }
     }
@@ -41,6 +23,6 @@ export const submissionSlice = createSlice({
 
 export const {saveActivities} = submissionSlice.actions;
 
-export const selectActivities: Selector<RootState, ActivityFields[]> = state => state.submissions.activities;
+export const selectActivities: Selector<RootState, ActivityDto[]> = state => state.submissions.activities;
 
 export default submissionSlice.reducer;

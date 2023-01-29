@@ -1,10 +1,12 @@
-import { ActivityCategory, ActivityWeight } from "../store/form.store";
 
+export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
+export type ActivityWeight = 'MAJOR' | 'SIGNIFICANT' | 'MINOR';
 export type Semester = 'Fall' | 'Spring' | 'Summer 1' | 'Summer 2';
 
 export type ActivityDto = {
-    userId: number;
-    academicYearId: number;
+    id: string;
+    userId: string;
+    academicYearId: string;
     year: number;
     semester: Semester;
     date?: Date;
@@ -16,8 +18,8 @@ export type ActivityDto = {
 };
 
 export type CreateActivityDto = {
-    userId: number;
-    academicYearId: number;
+    userId: string;
+    academicYearId: string;
     year: number;
     semester: Semester;
     date?: Date;

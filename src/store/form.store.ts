@@ -1,12 +1,9 @@
 import { createSlice, Selector } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/app.store";
-import { Semester } from "../models/activity.dto";
+import { ActivityCategory, ActivityWeight, Semester } from "../models/activity.dto";
 
 export type FormStep = 'selection' | 'form' | 'success' | 'loading' | 'error'
-export type ActivityCategory = 'TEACHING' | 'RESEARCH' | 'SERVICE';
-export type ActivityWeight = 'MAJOR' | 'SIGNIFICANT' | 'MINOR';
-
 
 // TODO: We might want to make this string or null? and do the a null check inside the component? Or we can check for null and validate
 // that it fits the intended format before sending to the backend? Either way we have to check for correct format before sending to backend

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { getActivitiesForUser } from '../api/activities.client';
+import { ActivityDto } from '../models/activity.dto';
 import { seperateActivitiesByCategory } from '../shared/utils/activity.util';
-import { ActivityFields } from '../store/Submission.store';
 import "./Submissions.scss";
 
-const activities:ActivityFields[] = [
+const activities: ActivityDto[] = [
     {
+        id: "1",
         name:"name",
-        academicYearId:1,
+        academicYearId:"1",
         isFavorite:false,
         userId:"1", 
         year:2023, 
@@ -17,8 +18,9 @@ const activities:ActivityFields[] = [
         significance:"MAJOR"
     },
     {
+        id: "2",
         name:"name 2",
-        academicYearId:1,
+        academicYearId:"1",
         isFavorite:false,
         userId:"1", 
         year:2023, 
@@ -38,7 +40,6 @@ const SubmissionsPage: React.FC = () => {
             console.log(activities);
         })
     });
-    const name = `Max`;
     return (
         <div className="submission-page-container">
             <h1>Submitted Activities</h1>
